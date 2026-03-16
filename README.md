@@ -1,59 +1,79 @@
-# FondosBTG
+# Proyecto Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
+Este proyecto fue desarrollado con Angular por Leonardo Sanabria.
 
-## Development server
+## Requisitos
 
-To start a local development server, run:
+Antes de ejecutar la aplicación, asegúrate de tener instalado:
+
+- Node.js
+- npm
+- Angular CLI
+
+Puedes validar las versiones con:
+
+```bash
+node -v
+npm -v
+ng version
+```
+
+## Instalación
+
+Instala las dependencias del proyecto con:
+
+```bash
+npm install
+```
+
+## Ejecutar la aplicación
+
+Para iniciar la aplicación en modo desarrollo, usa:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Luego abre tu navegador en:
 
 ```bash
-ng generate component component-name
+http://localhost:4200/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Formatear el código
+
+Para formatear el proyecto con Prettier, ejecuta:
 
 ```bash
-ng generate --help
+npm run format
 ```
 
-## Building
+## Despliegue
 
-To build the project run:
+Para este proyecto, una opción de despliegue sería:
+
+- Generar la build de producción con:
 
 ```bash
-ng build
+ng build --configuration production
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Publicar los archivos generados en la carpeta `dist/` en una plataforma de hosting estático o servidor web.
 
-## Running unit tests
+### Estrategia sugerida
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Se podría desplegar en alguna de estas opciones:
 
-```bash
-ng test
-```
+- **Vercel** o **Netlify** para una aplicación frontend estática.
+- **Firebase Hosting** si se desea una integración sencilla y rápida.
+- **NGINX en un VPS** si se requiere un despliegue más controlado y personalizado.
 
-## Running end-to-end tests
+### Flujo general de despliegue
 
-For end-to-end (e2e) testing, run:
+1. Ejecutar la build de producción.
+2. Validar que los archivos se generen correctamente en `dist/`.
+3. Configurar la plataforma elegida para servir el contenido estático.
+4. En caso de usar rutas de Angular, configurar redirección al `index.html`.
+5. Validar funcionamiento final en ambiente productivo.
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

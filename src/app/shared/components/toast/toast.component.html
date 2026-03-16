@@ -1,0 +1,11 @@
+<div class="toast" [ngClass]="'toast--' + type" [@slideIn]>
+  <div class="toast__icon">
+    <span *ngIf="type === 'success'">✓</span>
+    <span *ngIf="type === 'error'">✕</span>
+    <span *ngIf="type === 'info'">ℹ</span>
+  </div>
+  <div class="toast__content">
+    <p class="toast__message">{{ message }}</p>
+  </div>
+  <button class="toast__close" (click)="onClose()">×</button>
+</div>

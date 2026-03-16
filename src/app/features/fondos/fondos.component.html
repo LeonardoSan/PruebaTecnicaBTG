@@ -1,0 +1,113 @@
+<div class="toast-container">
+  <app-toast
+    *ngFor="let toast of toasts"
+    [message]="toast.message"
+    [type]="toast.type"
+    (closed)="removeToast(toast.id)"
+  >
+  </app-toast>
+</div>
+
+<app-modal-suscripcion
+  *ngIf="fondoSeleccionado"
+  [fondo]="fondoSeleccionado"
+  [saldo]="saldo"
+  [loading]="loading"
+  (confirmar)="confirmarSuscripcion($event)"
+  (cancelar)="cerrarModal()"
+>
+</app-modal-suscripcion>
+
+<div class="fondos-container">
+  <div class="header">
+    <div class="header__info">
+      <h1 class="header__title">Fondos de Inversión</h1>
+      <p class="header__subtitle">BTG Pactual · Gestión de portafolio</p>
+    </div>
+    <div class="saldo-card">
+      <span class="saldo-card__label">Saldo disponible</span>
+      <span class="saldo-card__value">{{ saldo | cop }}</span>
+    </div>
+  </div>
+
+  <div class="filtros">
+    <button
+      class="filtro-btn"
+      [class.filtro-btn--active]="filtroActivo === 'todos'"
+      (click)="setFiltro('todos')"
+    >
+      Todos
+    </button>
+    <button
+      class="filtro-btn"
+      [class.filtro-btn--active]="filtroActivo === 'FPV'"
+      (click)="setFiltro('FPV')"
+    >
+      FPV
+    </button>
+    <button
+      class="filtro-btn"
+      [class.filtro-btn--active]="filtroActivo === 'FIC'"
+      (click)="setFiltro('FIC')"
+    >
+      FIC
+    </button>
+  </div>
+
+  <div class="loading-state" *ngIf="loading && fondos.length === 0">
+    <div class="skeleton" *ngFor="let i of [1, 2, 3, 4, 5]"></div>
+  </div>
+
+  <div class="fondos-grid" *ngIf="!loading || fondos.length > 0">
+    <div
+      class="fondo-card"
+      *ngFor="let fondo of fondosFiltrados"
+      [class.fondo-card--suscrito]="fondo.suscrito"
+      [class.fondo-card--sin-saldo]="!fondo.suscrito && saldo < fondo.montoMinimo"
+    >
+      <div class="fondo-card__header">
+        <span class="badge" [ngClass]="fondo.categoria === 'FPV' ? 'badge--fpv' : 'badge--fic'">
+          {{ fondo.categoria }}
+        </span>
+        <span class="fondo-card__estado" *ngIf="fondo.suscrito">
+          <span class="estado-dot"></span> Activo
+        </span>
+      </div>
+
+      <h3 class="fondo-card__nombre">{{ fondo.nombre }}</h3>
+
+      <div class="fondo-card__monto">
+        <span class="fondo-card__monto-label">Monto mínimo</span>
+        <span class="fondo-card__monto-value">{{ fondo.montoMinimo | cop }}</span>
+      </div>
+
+      <div class="alerta-saldo" *ngIf="!fondo.suscrito && saldo < fondo.montoMinimo">
+        <span>⚠ Saldo insuficiente</span>
+      </div>
+
+      <div class="fondo-card__actions">
+        <button
+          *ngIf="!fondo.suscrito"
+          class="btn btn--subscribe"
+          [disabled]="saldo < fondo.montoMinimo || loading"
+          (click)="abrirModal(fondo)"
+        >
+          Suscribirse
+        </button>
+        <button
+          *ngIf="fondo.suscrito"
+          class="btn btn--cancel"
+          [disabled]="loading"
+          (click)="cancelar(fondo)"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="fondosFiltrados.length === 0 && !loading">
+    <span class="empty-state__icon">📂</span>
+    <p>No hay fondos en esta categoría</p>
+  </div>
+</div>

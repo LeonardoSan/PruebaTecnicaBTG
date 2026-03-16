@@ -1,0 +1,71 @@
+<div class="historial-container">
+  <div class="historial-header">
+    <h1 class="historial-title">Historial de Transacciones</h1>
+    <p class="historial-subtitle">Registro completo de sus movimientos</p>
+  </div>
+
+  <div class="empty" *ngIf="transacciones.length === 0">
+    <div class="empty__icon">📋</div>
+    <h3>Sin movimientos aún</h3>
+    <p>Aquí verá el registro de sus suscripciones y cancelaciones.</p>
+  </div>
+
+  <div class="tabla-wrapper" *ngIf="transacciones.length > 0">
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat__value">{{ totalSuscripciones }}</span>
+        <span class="stat__label">Suscripciones</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">{{ totalCancelaciones }}</span>
+        <span class="stat__label">Cancelaciones</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value stat__value--accent">{{ totalInvertido | cop }}</span>
+        <span class="stat__label">Total invertido</span>
+      </div>
+    </div>
+
+    <div class="tabla">
+      <div class="tabla__header">
+        <span>Fecha</span>
+        <span>Fondo</span>
+        <span>Tipo</span>
+        <span class="text-right">Monto</span>
+      </div>
+      <div
+        class="tabla__row"
+        *ngFor="let txn of transacciones"
+        [class.tabla__row--suscripcion]="txn.tipo === 'SUSCRIPCION'"
+        [class.tabla__row--cancelacion]="txn.tipo === 'CANCELACION'"
+      >
+        <div class="tabla__cell">
+          <span class="fecha">{{ txn.fecha | date: 'dd/MM/yy' }}</span>
+          <span class="hora">{{ txn.fecha | date: 'HH:mm' }}</span>
+        </div>
+        <div class="tabla__cell">
+          <span class="fondo-nombre">{{ txn.fondoNombre }}</span>
+          <span class="notif-badge" *ngIf="txn.metodoNotificacion">
+            {{ txn.metodoNotificacion === 'email' ? '✉ email' : '💬 SMS' }}
+          </span>
+        </div>
+        <div class="tabla__cell">
+          <span
+            class="tipo-badge"
+            [ngClass]="txn.tipo === 'SUSCRIPCION' ? 'tipo-badge--verde' : 'tipo-badge--rojo'"
+          >
+            {{ txn.tipo === 'SUSCRIPCION' ? 'Suscripción' : 'Cancelación' }}
+          </span>
+        </div>
+        <div class="tabla__cell text-right">
+          <span
+            class="monto"
+            [ngClass]="txn.tipo === 'SUSCRIPCION' ? 'monto--negativo' : 'monto--positivo'"
+          >
+            {{ txn.tipo === 'SUSCRIPCION' ? '-' : '+' }}{{ txn.monto | cop }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="modal-backdrop" (click)="onCancel()" [@fadeIn]>
+  <div class="modal" (click)="$event.stopPropagation()" [@slideUp]>
+    <div class="modal__header">
+      <div class="modal__badge" [ngClass]="fondo.categoria === 'FPV' ? 'badge--fpv' : 'badge--fic'">
+        {{ fondo.categoria }}
+      </div>
+      <h2 class="modal__title">Suscribirse al Fondo</h2>
+      <button class="modal__close" (click)="onCancel()">×</button>
+    </div>
+
+    <div class="modal__body">
+      <div class="fondo-info">
+        <h3 class="fondo-info__nombre">{{ fondo.nombre }}</h3>
+        <div class="fondo-info__monto">
+          <span class="label">Monto mínimo de inversión</span>
+          <span class="amount">{{ fondo.montoMinimo | cop }}</span>
+        </div>
+        <div class="fondo-info__saldo">
+          <span class="label">Saldo disponible</span>
+          <span
+            class="amount"
+            [ngClass]="saldo < fondo.montoMinimo ? 'amount--danger' : 'amount--ok'"
+          >
+            {{ saldo | cop }}
+          </span>
+        </div>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+        <div class="form-group">
+          <label class="form-label">Método de notificación</label>
+          <div class="notif-options">
+            <label
+              class="notif-option"
+              [class.notif-option--selected]="form.get('metodo')?.value === 'email'"
+            >
+              <input type="radio" formControlName="metodo" value="email" />
+              <span class="notif-option__icon">✉</span>
+              <span class="notif-option__label">Email</span>
+            </label>
+            <label
+              class="notif-option"
+              [class.notif-option--selected]="form.get('metodo')?.value === 'sms'"
+            >
+              <input type="radio" formControlName="metodo" value="sms" />
+              <span class="notif-option__icon">💬</span>
+              <span class="notif-option__label">SMS</span>
+            </label>
+          </div>
+          <div
+            class="form-error"
+            *ngIf="form.get('metodo')?.invalid && form.get('metodo')?.touched"
+          >
+            Seleccione un método de notificación
+          </div>
+        </div>
+
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost" (click)="onCancel()">Cancelar</button>
+          <button
+            type="submit"
+            class="btn btn--primary"
+            [disabled]="form.invalid || saldo < fondo.montoMinimo || loading"
+          >
+            <span *ngIf="!loading">Confirmar suscripción</span>
+            <span *ngIf="loading" class="spinner"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

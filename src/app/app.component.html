@@ -1,0 +1,57 @@
+<div class="app-shell">
+  <nav class="sidebar">
+    <div class="sidebar__brand">
+      <div class="brand-logo">B</div>
+      <div class="brand-text">
+        <span class="brand-name">BTG</span>
+        <span class="brand-subtitle">Pactual</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/fondos" routerLinkActive="nav-link--active" class="nav-link">
+          <span class="nav-link__icon">◈</span>
+          <span class="nav-link__label">Fondos</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/historial" routerLinkActive="nav-link--active" class="nav-link">
+          <span class="nav-link__icon">◉</span>
+          <span class="nav-link__label">Historial</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar__footer">
+      <div class="user-chip">
+        <div class="user-chip__avatar">U</div>
+        <div class="user-chip__info">
+          <span class="user-chip__name">Usuario BTG</span>
+          <span class="user-chip__role">Cliente</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="mobile-header">
+    <div class="brand-logo brand-logo--sm">B</div>
+    <span class="brand-name">BTG Pactual</span>
+    <nav class="mobile-nav">
+      <a routerLink="/fondos" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link">
+        Fondos
+      </a>
+      <a
+        routerLink="/historial"
+        routerLinkActive="mobile-nav__link--active"
+        class="mobile-nav__link"
+      >
+        Historial
+      </a>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>
