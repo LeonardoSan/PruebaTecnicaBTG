@@ -77,3 +77,6 @@ Se podría desplegar en alguna de estas opciones:
 5. Validar funcionamiento final en ambiente productivo.
 
 
+### Evidencia en video
+
+Hay un pequeño video con la demostración del video en la raíz del proyecto
